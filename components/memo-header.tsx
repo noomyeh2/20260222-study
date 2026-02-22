@@ -1,7 +1,8 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Search, Plus, LogOut } from "lucide-react"
+import { useTheme } from "next-themes"
+import { Search, Plus, LogOut, Sun, Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/contexts/auth-context"
 import {
@@ -20,6 +21,8 @@ interface MemoHeaderProps {
 
 export function MemoHeader({ searchQuery, onSearchChange, onNewMemo, memoCount }: MemoHeaderProps) {
   const { user, signOut } = useAuth()
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   const router = useRouter()
 
   const handleSignOut = async () => {
@@ -56,6 +59,19 @@ export function MemoHeader({ searchQuery, onSearchChange, onNewMemo, memoCount }
               className="pl-9 pr-4 py-2 w-48 md:w-64 rounded-xl bg-secondary text-sm text-foreground placeholder:text-muted-foreground border border-border focus:outline-none focus:ring-2 focus:ring-ring/30 transition-all"
             />
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-xl"
+            onClick={() => setTheme(isDark ? "light" : "dark")}
+            aria-label={isDark ? "라이트 모드로 전환" : "다크 모드로 전환"}
+          >
+            {isDark ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+          </Button>
           <Button
             onClick={onNewMemo}
             size="icon"

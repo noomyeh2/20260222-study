@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Outfit, Space_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AuthProvider } from '@/contexts/auth-context'
+import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
 const outfit = Outfit({
@@ -49,12 +50,19 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <body className={`${outfit.variable} ${spaceMono.variable} font-sans antialiased`}>
-        <AuthProvider>
-          {children}
-          <Analytics />
-        </AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            {children}
+            <Analytics />
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

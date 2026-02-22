@@ -8,3 +8,6 @@ node_modules/
 .next/
 .env*.local
 .DS_Store
+
+# 개인 문서 (토큰 등 민감 정보 포함 가능)
+새 텍스트 문서.txt
